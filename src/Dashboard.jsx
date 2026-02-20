@@ -81,23 +81,55 @@ const Dashboard = ({ user }) => {
   if (loading) return <div className="min-h-screen bg-slate-950 flex items-center justify-center text-white">Loading...</div>;
 
   return (
-    <div className="min-h-screen bg-slate-950 p-6">
+    <div className="min-h-screen bg-slate-950 p-4 md:p-6">
       <div className="max-w-7xl mx-auto">
 
-        {/* HERO CARDS */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-          <Card>
-            <CardHeader className="pb-2"><CardTitle className="text-slate-400 text-sm font-medium">Total Balance</CardTitle></CardHeader>
-            <CardContent><div className="text-3xl font-bold text-white">${balance.toFixed(2)}</div></CardContent>
+        {/* 1. RESTORED HEADER (Mobile Friendly) */}
+        <div className="mb-6 md:mb-8">
+          {/* App Name - Only shows on mobile (Desktop has it in the sidebar) */}
+          <div className="flex items-center gap-2 mb-2 md:hidden">
+            <div className="w-8 h-8 bg-gradient-to-r from-indigo-500 to-purple-600 rounded-lg flex items-center justify-center shadow-lg shadow-indigo-500/20">
+              <Wallet className="h-4 w-4 text-white" />
+            </div>
+            <h1 className="text-xl font-bold text-white font-sans">RentManager</h1>
+          </div>
+
+          <h2 className="text-2xl md:text-3xl font-bold text-white">Dashboard</h2>
+          <p className="text-slate-400 text-sm md:text-base">Welcome back, {user?.displayName?.split(' ')[0]}!</p>
+        </div>
+
+        {/* 2. RESTRUCTURED HERO CARDS */}
+        {/* Mobile: Balance takes full width (col-span-2), Income/Expense split the row below it */}
+        {/* Desktop: All three sit side-by-side (md:grid-cols-3) */}
+        <div className="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-6 mb-8">
+
+          <Card className="col-span-2 md:col-span-1">
+            <CardHeader className="pb-2">
+              <CardTitle className="text-slate-400 text-xs md:text-sm font-medium">Total Balance</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="text-3xl md:text-3xl font-bold text-white">${balance.toFixed(2)}</div>
+            </CardContent>
           </Card>
-          <Card>
-            <CardHeader className="pb-2"><CardTitle className="text-slate-400 text-sm font-medium">Income</CardTitle></CardHeader>
-            <CardContent><div className="text-3xl font-bold text-emerald-400">+${totalIncome.toFixed(2)}</div></CardContent>
+
+          <Card className="col-span-1">
+            <CardHeader className="pb-2">
+              <CardTitle className="text-slate-400 text-xs md:text-sm font-medium">Income</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="text-lg md:text-3xl font-bold text-emerald-400 truncate">+${totalIncome.toFixed(0)}</div>
+            </CardContent>
           </Card>
-          <Card>
-            <CardHeader className="pb-2"><CardTitle className="text-slate-400 text-sm font-medium">Expenses</CardTitle></CardHeader>
-            <CardContent><div className="text-3xl font-bold text-rose-400">-${totalExpense.toFixed(2)}</div></CardContent>
+
+          <Card className="col-span-1">
+            <CardHeader className="pb-2">
+              <CardTitle className="text-slate-400 text-xs md:text-sm font-medium">Expenses</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="text-lg md:text-3xl font-bold text-rose-400 truncate">-${totalExpense.toFixed(0)}</div>
+            </CardContent>
           </Card>
+
         </div>
 
         {/* CHART */}
@@ -167,7 +199,7 @@ const Dashboard = ({ user }) => {
         {/* FAB (Add Button) */}
         <button
           onClick={() => setShowModal(true)}
-          className="fixed bottom-8 right-8 w-14 h-14 bg-indigo-600 rounded-full flex items-center justify-center shadow-lg hover:bg-indigo-500 text-white transition-all hover:scale-110 z-50"
+          className="fixed bottom-20 md:bottom-8 right-4 md:right-8 w-14 h-14 bg-indigo-600 rounded-full flex items-center justify-center shadow-lg hover:bg-indigo-500 text-white transition-all hover:scale-110 z-50"
         >
           <Plus size={24} />
         </button>
