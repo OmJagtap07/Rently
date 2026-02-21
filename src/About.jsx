@@ -6,7 +6,7 @@ const About = () => {
     // Bug Report / Feedback Handler
     const handleFeedback = () => {
         // Replace with your actual preferred email if different
-        const email = "oj68686868@gmail.com";
+        const email = "omjagtappatil07@gmail.com";
         const subject = "RentManager: Bug Report / Feature Suggestion";
         const body = "Hi Om,%0D%0A%0D%0AI was using the RentManager app and wanted to share the following feedback/bug:%0D%0A%0D%0A[Please describe the issue or idea here]%0D%0A%0D%0AThanks!";
 

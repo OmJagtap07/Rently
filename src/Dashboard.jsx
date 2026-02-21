@@ -2,8 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { Plus, TrendingUp, TrendingDown, Wallet, LogOut, Trash2 } from 'lucide-react'; // Added Trash2
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import { Card, CardContent, CardHeader, CardTitle, Button } from './components/ui/all-ui';
-import { auth, db } from './firebase';
-import { signOut } from 'firebase/auth';
+import { db } from './firebase';
+// import { auth, db } from './firebase';
+// import { signOut } from 'firebase/auth';
 import { collection, query, where, orderBy, addDoc, onSnapshot, deleteDoc, doc } from 'firebase/firestore'; // Added deleteDoc, doc
 
 const Dashboard = ({ user }) => {
@@ -108,7 +109,7 @@ const Dashboard = ({ user }) => {
               <CardTitle className="text-slate-400 text-xs md:text-sm font-medium">Total Balance</CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="text-3xl md:text-3xl font-bold text-white">${balance.toFixed(2)}</div>
+              <div className="text-3xl md:text-3xl font-bold text-white">₹{balance.toFixed(2)}</div>
             </CardContent>
           </Card>
 
@@ -117,7 +118,7 @@ const Dashboard = ({ user }) => {
               <CardTitle className="text-slate-400 text-xs md:text-sm font-medium">Income</CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="text-lg md:text-3xl font-bold text-emerald-400 truncate">+${totalIncome.toFixed(0)}</div>
+              <div className="text-lg md:text-3xl font-bold text-emerald-400 truncate">+₹{totalIncome.toFixed(0)}</div>
             </CardContent>
           </Card>
 
@@ -126,7 +127,7 @@ const Dashboard = ({ user }) => {
               <CardTitle className="text-slate-400 text-xs md:text-sm font-medium">Expenses</CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="text-lg md:text-3xl font-bold text-rose-400 truncate">-${totalExpense.toFixed(0)}</div>
+              <div className="text-lg md:text-3xl font-bold text-rose-400 truncate">-₹{totalExpense.toFixed(0)}</div>
             </CardContent>
           </Card>
 
@@ -177,7 +178,7 @@ const Dashboard = ({ user }) => {
 
                     <div className="flex items-center gap-4">
                       <span className={`font-bold ${t.type === 'income' ? 'text-emerald-400' : 'text-rose-400'}`}>
-                        {t.type === 'income' ? '+' : '-'}${Math.abs(t.amount)}
+                        {t.type === 'income' ? '+' : '-'}₹{Math.abs(t.amount)}
                       </span>
 
                       {/* DELETE BUTTON - Only shows on hover (group-hover) */}
