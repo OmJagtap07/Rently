@@ -63,9 +63,13 @@ const Dashboard = ({ user }) => {
     }
   };
 
-  // 4. STATS & CHART
-  const totalIncome = transactions.filter(t => t.type === 'income').reduce((sum, t) => sum + t.amount, 0);
-  const totalExpense = transactions.filter(t => t.type === 'expense').reduce((sum, t) => sum + Math.abs(t.amount), 0);
+  // 4. STATS & CHART (Filtered for Current Month)
+  const currentMonth = new Date().toISOString().substring(0, 7); // Gets "YYYY-MM" (e.g., "2026-02")
+
+  const currentMonthTransactions = transactions.filter(t => t.date.startsWith(currentMonth));
+
+  const totalIncome = currentMonthTransactions.filter(t => t.type === 'income').reduce((sum, t) => sum + t.amount, 0);
+  const totalExpense = currentMonthTransactions.filter(t => t.type === 'expense').reduce((sum, t) => sum + Math.abs(t.amount), 0);
   const balance = totalIncome - totalExpense;
 
   const getChartData = () => {
@@ -100,34 +104,38 @@ const Dashboard = ({ user }) => {
         </div>
 
         {/* 2. RESTRUCTURED HERO CARDS */}
-        {/* Mobile: Balance takes full width (col-span-2), Income/Expense split the row below it */}
-        {/* Desktop: All three sit side-by-side (md:grid-cols-3) */}
         <div className="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-6 mb-8">
 
           <Card className="col-span-2 md:col-span-1">
             <CardHeader className="pb-2">
-              <CardTitle className="text-slate-400 text-xs md:text-sm font-medium">Total Balance</CardTitle>
+              <CardTitle className="text-slate-400 text-xs md:text-sm font-medium">This Month's Balance</CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="text-3xl md:text-3xl font-bold text-white">₹{balance.toFixed(2)}</div>
+              <div className="text-3xl md:text-3xl font-bold text-white">
+                {balance >= 0 ? '' : '-'}₹{Math.abs(balance).toLocaleString('en-IN')}
+              </div>
             </CardContent>
           </Card>
 
           <Card className="col-span-1">
             <CardHeader className="pb-2">
-              <CardTitle className="text-slate-400 text-xs md:text-sm font-medium">Income</CardTitle>
+              <CardTitle className="text-slate-400 text-xs md:text-sm font-medium">Monthly Income</CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="text-lg md:text-3xl font-bold text-emerald-400 truncate">+₹{totalIncome.toFixed(0)}</div>
+              <div className="text-lg md:text-3xl font-bold text-emerald-400 truncate">
+                +₹{totalIncome.toLocaleString('en-IN')}
+              </div>
             </CardContent>
           </Card>
 
           <Card className="col-span-1">
             <CardHeader className="pb-2">
-              <CardTitle className="text-slate-400 text-xs md:text-sm font-medium">Expenses</CardTitle>
+              <CardTitle className="text-slate-400 text-xs md:text-sm font-medium">Monthly Expenses</CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="text-lg md:text-3xl font-bold text-rose-400 truncate">-₹{totalExpense.toFixed(0)}</div>
+              <div className="text-lg md:text-3xl font-bold text-rose-400 truncate">
+                -₹{totalExpense.toLocaleString('en-IN')}
+              </div>
             </CardContent>
           </Card>
 
