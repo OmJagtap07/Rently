@@ -72,6 +72,18 @@ const Dashboard = ({ user }) => {
   const totalExpense = currentMonthTransactions.filter(t => t.type === 'expense').reduce((sum, t) => sum + Math.abs(t.amount), 0);
   const balance = totalIncome - totalExpense;
 
+  // --- NEW: GROUP TRANSACTIONS BY DATE ---
+  const groupedTransactions = {};
+  currentMonthTransactions.forEach(t => {
+    if (!groupedTransactions[t.date]) {
+      groupedTransactions[t.date] = []; // Create a new array if this date doesn't exist yet
+    }
+    groupedTransactions[t.date].push(t);
+  });
+
+  // Sort the dates from newest to oldest (so today is at the top)
+  const sortedDates = Object.keys(groupedTransactions).sort((a, b) => b.localeCompare(a));
+
   const getChartData = () => {
     const data = {};
     transactions.forEach(t => {
@@ -166,40 +178,62 @@ const Dashboard = ({ user }) => {
           </CardContent>
         </Card>
 
-        {/* LIST - NOW WITH DELETE BUTTON */}
+        {/* LIST - NOW GROUPED BY DATE */}
         <Card>
-          <CardHeader><CardTitle>Recent Transactions</CardTitle></CardHeader>
+          <CardHeader><CardTitle>This Month's Transactions</CardTitle></CardHeader>
           <CardContent>
-            {transactions.length === 0 ? <p className="text-slate-500">No transactions yet.</p> : (
-              <div className="space-y-4">
-                {transactions.slice(0, 10).map(t => (
-                  <div key={t.id} className="flex justify-between items-center bg-slate-900 p-3 rounded border border-slate-800 hover:border-slate-700 transition-colors group">
-                    <div className="flex items-center gap-3">
-                      <div className={`p-2 rounded ${t.type === 'income' ? 'bg-emerald-500/20 text-emerald-400' : 'bg-rose-500/20 text-rose-400'}`}>
-                        {t.type === 'income' ? <TrendingUp size={18} /> : <TrendingDown size={18} />}
-                      </div>
-                      <div>
-                        <p className="font-bold text-slate-200">{t.description}</p>
-                        <p className="text-xs text-slate-500">{t.date} • {t.tenantName || 'Expense'}</p>
-                      </div>
-                    </div>
+            {sortedDates.length === 0 ? <p className="text-slate-500">No transactions this month.</p> : (
+              <div className="space-y-6">
+                {sortedDates.map(dateKey => {
+                  // Format the date nicely (e.g., "26 February 2026")
+                  const dateObj = new Date(dateKey);
+                  const dateLabel = dateObj.toLocaleDateString('en-IN', { day: 'numeric', month: 'long', year: 'numeric' });
 
-                    <div className="flex items-center gap-4">
-                      <span className={`font-bold ${t.type === 'income' ? 'text-emerald-400' : 'text-rose-400'}`}>
-                        {t.type === 'income' ? '+' : '-'}₹{Math.abs(t.amount)}
-                      </span>
+                  return (
+                    <div key={dateKey} className="space-y-3">
 
-                      {/* DELETE BUTTON - Only shows on hover (group-hover) */}
-                      <button
-                        onClick={() => handleDelete(t.id)}
-                        className="opacity-0 group-hover:opacity-100 p-2 text-slate-500 hover:text-rose-500 hover:bg-rose-500/10 rounded-full transition-all"
-                        title="Delete Transaction"
-                      >
-                        <Trash2 size={16} />
-                      </button>
+                      {/* Date Separator Header */}
+                      <div className="flex items-center gap-3 opacity-80">
+                        <div className="h-px bg-slate-800 flex-1"></div>
+                        <span className="text-xs font-bold text-indigo-400 uppercase tracking-wider">{dateLabel}</span>
+                        <div className="h-px bg-slate-800 flex-1"></div>
+                      </div>
+
+                      {/* The Transactions for this specific date */}
+                      <div className="space-y-2">
+                        {groupedTransactions[dateKey].map(t => (
+                          <div key={t.id} className="flex justify-between items-center bg-slate-900 p-3 rounded-lg border border-slate-800 hover:border-slate-700 transition-colors group">
+                            <div className="flex items-center gap-3">
+                              <div className={`p-2 rounded ${t.type === 'income' ? 'bg-emerald-500/20 text-emerald-400' : 'bg-rose-500/20 text-rose-400'}`}>
+                                {t.type === 'income' ? <TrendingUp size={18} /> : <TrendingDown size={18} />}
+                              </div>
+                              <div>
+                                <p className="font-bold text-slate-200">{t.description}</p>
+                                <p className="text-xs text-slate-500">{t.tenantName || 'Expense'}</p>
+                              </div>
+                            </div>
+
+                            <div className="flex items-center gap-4">
+                              <span className={`font-bold ${t.type === 'income' ? 'text-emerald-400' : 'text-rose-400'}`}>
+                                {t.type === 'income' ? '+' : '-'}₹{Math.abs(t.amount).toLocaleString('en-IN')}
+                              </span>
+
+                              {/* DELETE BUTTON */}
+                              <button
+                                onClick={() => handleDelete(t.id)}
+                                className="opacity-0 group-hover:opacity-100 p-2 text-slate-500 hover:text-rose-500 hover:bg-rose-500/10 rounded-full transition-all"
+                                title="Delete Transaction"
+                              >
+                                <Trash2 size={16} />
+                              </button>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+
                     </div>
-                  </div>
-                ))}
+                  );
+                })}
               </div>
             )}
           </CardContent>
