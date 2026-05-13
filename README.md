@@ -1,16 +1,95 @@
-# React + Vite
+# 🏢 RentManager
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+**RentManager** is a professional Property Management and Expense Tracking SaaS built with modern web technologies. It provides a seamless interface for landlords and property managers to track their financial transactions, manage tenants, and gain insights into their rental property income and expenses.
 
-Currently, two official plugins are available:
+🔗 **Live Demo:** [RentManager on Netlify](https://rentmanager0.netlify.app/)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+---
 
-## React Compiler
+## ✨ Features
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- **🔐 Secure Authentication:** Seamless Google Sign-In powered by Firebase Authentication.
+- **📊 Interactive Dashboard:** Visual financial overview with dynamic charts (powered by Recharts).
+- **💸 Expense & Income Tracking:** Easily log, categorize, and delete transactions. Grouped by date for easy reading.
+- **👥 Tenant Management:** Keep track of tenants and associate incomes with specific tenants.
+- **📈 Financial Reports:** Detailed insights into your monthly balances, total income, and total expenses.
+- **📱 Fully Responsive:** Carefully crafted mobile-friendly design that works perfectly on all devices.
+- **🌙 Modern Dark UI:** Sleek, dark theme built with Tailwind CSS.
 
-## Expanding the ESLint configuration
+## 🛠️ Tech Stack
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+- **Frontend Framework:** [React 19](https://react.dev/) + [Vite](https://vitejs.dev/)
+- **Routing:** [React Router v7](https://reactrouter.com/)
+- **Styling:** [Tailwind CSS](https://tailwindcss.com/)
+- **Backend & Database:** [Firebase](https://firebase.google.com/) (Auth & Firestore)
+- **Icons:** [Lucide React](https://lucide.dev/)
+- **Charts:** [Recharts](https://recharts.org/)
+
+## 🚀 Getting Started
+
+Follow these steps to run the project locally.
+
+### Prerequisites
+- Node.js (v18 or higher recommended)
+- A Firebase project with Authentication (Google Sign-in) and Firestore Database enabled.
+
+### Installation
+
+1. **Clone the repository** (if applicable)
+   ```bash
+   git clone <your-repository-url>
+   cd expense-tracker
+   ```
+
+2. **Install dependencies**
+   ```bash
+   npm install
+   ```
+
+3. **Environment Setup**
+   Create a `.env` file in the root directory and add your Firebase configuration:
+   ```env
+   VITE_FIREBASE_API_KEY=your_api_key
+   VITE_FIREBASE_AUTH_DOMAIN=your_auth_domain
+   VITE_FIREBASE_PROJECT_ID=your_project_id
+   VITE_FIREBASE_STORAGE_BUCKET=your_storage_bucket
+   VITE_FIREBASE_MESSAGING_SENDER_ID=your_messaging_sender_id
+   VITE_FIREBASE_APP_ID=your_app_id
+   ```
+
+4. **Run the development server**
+   ```bash
+   npm run dev
+   ```
+   The app will be available at `http://localhost:5173`.
+
+## 📂 Project Structure
+
+```text
+src/
+├── components/       # Reusable UI components (Buttons, Cards, etc.)
+├── lib/              # Utility functions and helpers
+├── About.jsx         # About page
+├── App.jsx           # Main application entry & routing
+├── Dashboard.jsx     # Main financial dashboard and charts
+├── firebase.js       # Firebase initialization and configuration
+├── Layout.jsx        # App layout with Sidebar/Navbar navigation
+├── Reports.jsx       # Financial reporting view
+├── Settings.jsx      # User settings page
+└── Tenants.jsx       # Tenant management interface
+```
+
+## 📜 Scripts
+
+- `npm run dev`: Starts the Vite development server.
+- `npm run build`: Builds the app for production.
+- `npm run preview`: Locally preview the production build.
+- `npm run lint`: Runs ESLint to check for code quality.
+
+## 🤝 Contributing
+
+Contributions, issues, and feature requests are welcome! Feel free to check the issues page if you want to contribute.
+
+## 📄 License
+
+This project is open-source and available under the [MIT License](LICENSE).

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle, Button } from './components/ui/all-ui';
-import { User, Code, Lightbulb, Bug, Mail, Rocket, Wrench, Database } from 'lucide-react';
+import { User, Code, Lightbulb, Bug, Mail, Rocket, Wrench, Database, Github, Linkedin } from 'lucide-react';
 
 const About = () => {
     // Bug Report / Feedback Handler
@@ -61,6 +61,16 @@ const About = () => {
                         <p className="text-sm">
                             Passionate about full-stack development, UI/UX design, and building scalable SaaS applications that solve everyday problems.
                         </p>
+                        <div className="flex gap-4 pt-2 mt-2 border-t border-slate-800">
+                            <a href="https://github.com/OmJagtap07" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-slate-400 hover:text-white transition-colors mt-2">
+                                <Github size={18} />
+                                <span className="text-sm font-medium">GitHub</span>
+                            </a>
+                            <a href="https://www.linkedin.com/in/om-jagtap-837914376/" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-slate-400 hover:text-white transition-colors mt-2">
+                                <Linkedin size={18} />
+                                <span className="text-sm font-medium">LinkedIn</span>
+                            </a>
+                        </div>
                     </CardContent>
                 </Card>
 
