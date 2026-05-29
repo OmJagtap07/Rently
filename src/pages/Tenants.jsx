@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { Card, CardContent, CardHeader, CardTitle, Button, Input } from './components/ui/all-ui';
+import { Button } from '../components/ui/Button';
+import { Input } from '../components/ui/Input';
+import { Card, CardHeader, CardTitle, CardContent } from '../components/ui/Card';
 import { User, Mail, DollarSign, Loader2, MessageCircle, Phone, Save } from 'lucide-react';
-import { db, auth } from './firebase';
+import { db, auth } from '../config/firebase';
 import { collection, query, where, getDocs, setDoc, doc } from 'firebase/firestore';
 
 const Tenants = () => {

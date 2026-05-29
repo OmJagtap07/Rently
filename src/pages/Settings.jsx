@@ -1,7 +1,7 @@
 import React, { useState, } from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from './components/ui/all-ui';
+import { Card, CardHeader, CardTitle, CardContent } from '../components/ui/Card';
 import { User, Bell, Shield, Mail } from 'lucide-react';
-import { auth } from './firebase';
+import { auth } from '../config/firebase';
 
 const Settings = () => {
     const user = auth.currentUser;

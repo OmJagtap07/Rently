@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from './components/ui/all-ui';
+import { Card, CardHeader, CardTitle, CardContent } from '../components/ui/Card';
 import { TrendingUp, TrendingDown, Calendar, Loader2 } from 'lucide-react';
-import { db, auth } from './firebase';
+import { db, auth } from '../config/firebase';
 import { collection, query, where, getDocs, orderBy } from 'firebase/firestore';
 
 const Reports = () => {

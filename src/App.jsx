@@ -1,16 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'; // Import Router
-import { auth, provider } from './firebase';
+import { auth, provider } from './config/firebase';
 import { signInWithPopup, onAuthStateChanged } from 'firebase/auth';
 import { Wallet } from 'lucide-react';
 
 // Import Pages
-import Layout from './Layout.jsx';
-import Dashboard from './Dashboard';
-import Reports from './Reports.jsx'; // Make sure these paths match where you saved them!
-import Tenants from './Tenants.jsx';
-import Settings from './Settings.jsx';
-import About from './About.jsx';
+import Layout from './components/Layout.jsx';
+import Dashboard from './pages/Dashboard.jsx';
+import Reports from './pages/Reports.jsx'; // Make sure these paths match where you saved them!
+import Tenants from './pages/Tenants.jsx';
+import Settings from './pages/Settings.jsx';
+import About from './pages/About.jsx';
 
 
 function App() {

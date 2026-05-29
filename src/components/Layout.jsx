@@ -1,7 +1,7 @@
 import React from 'react';
 import { Outlet, NavLink, useNavigate } from 'react-router-dom';
 import { LayoutDashboard, FileText, Users, Settings, Info, LogOut, Wallet } from 'lucide-react';
-import { auth } from './firebase';
+import { auth } from '../config/firebase';
 import { signOut } from 'firebase/auth';
 
 const Layout = ({ user }) => {
