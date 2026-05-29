@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { Plus, TrendingUp, TrendingDown, Wallet, LogOut, Trash2 } from 'lucide-react'; // Added Trash2
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
-import { Card, CardContent, CardHeader, CardTitle, Button } from './components/ui/all-ui';
-import { db } from './firebase';
-// import { auth, db } from './firebase';
+import { Button } from '../components/ui/Button';
+import { Card, CardHeader, CardTitle, CardContent } from '../components/ui/Card';
+import { db } from '../config/firebase';
+// import { auth, db } from '../config/firebase';
 // import { signOut } from 'firebase/auth';
 import { collection, query, where, orderBy, addDoc, onSnapshot, deleteDoc, doc } from 'firebase/firestore'; // Added deleteDoc, doc
 

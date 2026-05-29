@@ -1,5 +1,6 @@
 import React from 'react';
-import { Card, CardContent, CardHeader, CardTitle, Button } from './components/ui/all-ui';
+import { Button } from '../components/ui/Button';
+import { Card, CardHeader, CardTitle, CardContent } from '../components/ui/Card';
 import { User, Code, Lightbulb, Bug, Mail, Rocket, Wrench, Database, Github, Linkedin } from 'lucide-react';
 
 const About = () => {
