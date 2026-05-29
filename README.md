@@ -37,8 +37,8 @@ A property management dashboard for landlords to track **rental income, expenses
 ### Dashboard
 ![Dashboard](docs/screenshots/dashboard.png)
 
-### Tenent Overview  
-![tenent](docs/screenshots/tenent.png)
+### Tenant Overview  
+![tenant](docs/screenshots/tenant.png)
 
 ### Rent Collection
 ![Rent Collection](docs/screenshots/report.png)
