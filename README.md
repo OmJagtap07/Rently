@@ -1,95 +1,104 @@
-# 🏢 RentManager
+# Rently 🏠
 
-**RentManager** is a professional Property Management and Expense Tracking SaaS built with modern web technologies. It provides a seamless interface for landlords and property managers to track their financial transactions, manage tenants, and gain insights into their rental property income and expenses.
+A property management dashboard for landlords to track **rental income, expenses, and tenant rent collection** — all in one place.
 
-🔗 **Live Demo:** [RentManager on Netlify](https://rentmanager0.netlify.app/)
+> 🔜 **Coming soon:** Tenant portal with rent due notifications and payment history.
+
+## 🚀 Live Demo
+👉 **[rentmanager0.netlify.app](https://rentmanager0.netlify.app/dashboard)**
 
 ---
 
 ## ✨ Features
 
-- **🔐 Secure Authentication:** Seamless Google Sign-In powered by Firebase Authentication.
-- **📊 Interactive Dashboard:** Visual financial overview with dynamic charts (powered by Recharts).
-- **💸 Expense & Income Tracking:** Easily log, categorize, and delete transactions. Grouped by date for easy reading.
-- **👥 Tenant Management:** Keep track of tenants and associate incomes with specific tenants.
-- **📈 Financial Reports:** Detailed insights into your monthly balances, total income, and total expenses.
-- **📱 Fully Responsive:** Carefully crafted mobile-friendly design that works perfectly on all devices.
-- **🌙 Modern Dark UI:** Sleek, dark theme built with Tailwind CSS.
+### Owner Dashboard (Available Now)
+- 📊 Income vs expense overview per property
+- 🏘️ Multi-property management from a single account
+- 💰 Rent collection tracking per tenant
+- 📈 Income and expense logging with history
+- 👥 Tenant management per property
 
-## 🛠️ Tech Stack
+### Tenant Portal (Coming Soon)
+- 🔔 Rent due notifications
+- 📬 Payment confirmation and history
+- 💬 Owner-tenant communication
 
-- **Frontend Framework:** [React 19](https://react.dev/) + [Vite](https://vitejs.dev/)
-- **Routing:** [React Router v7](https://reactrouter.com/)
-- **Styling:** [Tailwind CSS](https://tailwindcss.com/)
-- **Backend & Database:** [Firebase](https://firebase.google.com/) (Auth & Firestore)
-- **Icons:** [Lucide React](https://lucide.dev/)
-- **Charts:** [Recharts](https://recharts.org/)
+## 🛠 Tech Stack
+| Layer | Technology |
+|---|---|
+| Framework | React 18 + Vite |
+| Styling | Tailwind CSS |
+| Database | Firebase Firestore |
+| Auth | Firebase Authentication |
+| Deployment | Netlify |
 
-## 🚀 Getting Started
+## 📸 Screenshots
 
-Follow these steps to run the project locally.
+### Dashboard
+![Dashboard](docs/screenshots/dashboard.png)
 
-### Prerequisites
-- Node.js (v18 or higher recommended)
-- A Firebase project with Authentication (Google Sign-in) and Firestore Database enabled.
+### Tenent Overview  
+![tenent](docs/screenshots/tenent.png)
 
-### Installation
+### Rent Collection
+![Rent Collection](docs/screenshots/report.png)
 
-1. **Clone the repository** (if applicable)
-   ```bash
-   git clone <your-repository-url>
-   cd expense-tracker
-   ```
-
-2. **Install dependencies**
-   ```bash
-   npm install
-   ```
-
-3. **Environment Setup**
-   Create a `.env` file in the root directory and add your Firebase configuration:
-   ```env
-   VITE_FIREBASE_API_KEY=your_api_key
-   VITE_FIREBASE_AUTH_DOMAIN=your_auth_domain
-   VITE_FIREBASE_PROJECT_ID=your_project_id
-   VITE_FIREBASE_STORAGE_BUCKET=your_storage_bucket
-   VITE_FIREBASE_MESSAGING_SENDER_ID=your_messaging_sender_id
-   VITE_FIREBASE_APP_ID=your_app_id
-   ```
-
-4. **Run the development server**
-   ```bash
-   npm run dev
-   ```
-   The app will be available at `http://localhost:5173`.
-
-## 📂 Project Structure
-
-```text
+## 📁 Project Structure
+```
 src/
-├── components/       # Reusable UI components (Buttons, Cards, etc.)
-├── lib/              # Utility functions and helpers
-├── About.jsx         # About page
-├── App.jsx           # Main application entry & routing
-├── Dashboard.jsx     # Main financial dashboard and charts
-├── firebase.js       # Firebase initialization and configuration
-├── Layout.jsx        # App layout with Sidebar/Navbar navigation
-├── Reports.jsx       # Financial reporting view
-├── Settings.jsx      # User settings page
-└── Tenants.jsx       # Tenant management interface
+├── components/
+│   ├── ui/
+│   │   ├── Button.jsx         ← each component = own file
+│   │   ├── Card.jsx
+│   │   ├── Modal.jsx
+│   │   └── Input.jsx
+│   └── Layout.jsx             ← shared layout goes here
+├── pages/
+│   ├── Dashboard.jsx
+│   ├── Reports.jsx
+│   ├── Settings.jsx
+│   ├── Tenants.jsx
+│   └── About.jsx
+├── config/
+│   └── firebase.js
+├── hooks/                     ← create this, even if empty now
+│   └── useAuth.js
+├── context/                   ← create this, even if empty now
+│   └── AuthContext.jsx
+├── lib/                       ← keep as-is (likely shadcn utils)
+│   └── utils.js
+├── App.jsx
+├── main.jsx
+└── index.css
 ```
 
-## 📜 Scripts
+## ⚡ Getting Started
 
-- `npm run dev`: Starts the Vite development server.
-- `npm run build`: Builds the app for production.
-- `npm run preview`: Locally preview the production build.
-- `npm run lint`: Runs ESLint to check for code quality.
+```bash
+git clone https://github.com/OmJagtap07/Rently
+cd Rently
+npm install
+cp .env.example .env    # add your Firebase config
+npm run dev
+```
 
-## 🤝 Contributing
+## 🔧 Environment Variables
+Create a `.env` file at the root using `.env.example` as reference:
+```
+VITE_FIREBASE_API_KEY=
+VITE_FIREBASE_AUTH_DOMAIN=
+VITE_FIREBASE_PROJECT_ID=
+VITE_FIREBASE_STORAGE_BUCKET=
+VITE_FIREBASE_MESSAGING_SENDER_ID=
+VITE_FIREBASE_APP_ID=
+```
 
-Contributions, issues, and feature requests are welcome! Feel free to check the issues page if you want to contribute.
-
-## 📄 License
-
-This project is open-source and available under the [MIT License](LICENSE).
+## 🗺️ Roadmap
+- [x] Owner dashboard
+- [x] Multi-property support  
+- [x] Rent collection tracking
+- [x] Income / expense logging
+- [ ] Tenant portal
+- [ ] Rent due notifications
+- [ ] Payment history for tenants
+- [ ] Export reports as PDF
