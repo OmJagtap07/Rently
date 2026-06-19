@@ -1,32 +1,80 @@
 import React, { useState, useEffect } from 'react';
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'; // Import Router
-import { auth, provider } from './config/firebase';
+import { auth, provider, db } from './config/firebase';
 import { signInWithPopup, onAuthStateChanged } from 'firebase/auth';
+import { doc, getDoc, setDoc, onSnapshot, serverTimestamp } from 'firebase/firestore';
 import { Wallet } from 'lucide-react';
 
-// Import Pages
-import Layout from './components/Layout.jsx';
-import Dashboard from './pages/Dashboard.jsx';
-import Reports from './pages/Reports.jsx'; // Make sure these paths match where you saved them!
-import Tenants from './pages/Tenants.jsx';
-import Settings from './pages/Settings.jsx';
-import About from './pages/About.jsx';
-
+// Import Pages & Components
+import RoleSelection from './components/RoleSelection.jsx';
+import LandlordApp from './LandlordApp.jsx';
+import TenantApp from './TenantApp.jsx';
 
 function App() {
   const [user, setUser] = useState(null);
+  const [userData, setUserData] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [loadingUserProfile, setLoadingUserProfile] = useState(false);
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (u) => {
-      setUser(u);
-      setLoading(false);
+    let unsubscribeDoc = null;
+
+    const unsubscribeAuth = onAuthStateChanged(auth, async (u) => {
+      if (u) {
+        setUser(u);
+        setLoadingUserProfile(true);
+        // Subscribe to user document
+        const userRef = doc(db, 'users', u.uid);
+        
+        unsubscribeDoc = onSnapshot(userRef, (docSnap) => {
+          if (docSnap.exists()) {
+            setUserData(docSnap.data());
+          } else {
+            setUserData(null);
+          }
+          setLoadingUserProfile(false);
+          setLoading(false);
+        });
+      } else {
+        setUser(null);
+        setUserData(null);
+        if (unsubscribeDoc) {
+          unsubscribeDoc();
+          unsubscribeDoc = null;
+        }
+        setLoading(false);
+      }
     });
-    return () => unsubscribe();
+
+    return () => {
+      unsubscribeAuth();
+      if (unsubscribeDoc) unsubscribeDoc();
+    };
   }, []);
 
   const handleLogin = async () => {
-    try { await signInWithPopup(auth, provider); } catch (error) { console.error(error); }
+    try {
+      const result = await signInWithPopup(auth, provider);
+      const u = result.user;
+      
+      // Immediately create user document if it doesn't exist
+      const userRef = doc(db, 'users', u.uid);
+      const docSnap = await getDoc(userRef);
+      
+      if (!docSnap.exists()) {
+        await setDoc(userRef, {
+          uid: u.uid,
+          email: u.email,
+          displayName: u.displayName,
+          photoURL: u.photoURL,
+          role: null,
+          onboardingCompleted: false,
+          createdAt: serverTimestamp(),
+          updatedAt: serverTimestamp()
+        });
+      }
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   if (loading) return <div className="min-h-screen bg-slate-950 flex items-center justify-center text-white">Loading...</div>;
@@ -52,22 +100,27 @@ function App() {
     );
   }
 
-  // 2. IF LOGGED IN -> Show Router with Sidebar Layout
-  return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Layout user={user} />}>
-          {/* These pages render INSIDE the Layout (Right side) */}
-          <Route index element={<Navigate to="/dashboard" replace />} />
-          <Route path="dashboard" element={<Dashboard user={user} />} />
-          <Route path="reports" element={<Reports />} />
-          <Route path="tenants" element={<Tenants />} />
-          <Route path="settings" element={<Settings />} />
-          <Route path="about" element={<About />} />
-        </Route>
-      </Routes>
-    </BrowserRouter>
-  );
+  // 2. Loading User Profile
+  if (loadingUserProfile) {
+    return <div className="min-h-screen bg-slate-950 flex items-center justify-center text-white">Loading Profile...</div>;
+  }
+
+  // 3. User Exists, but No Role -> Role Selection
+  if (!userData?.role) {
+    return <RoleSelection user={user} />;
+  }
+
+  // 4. Role Exists -> Route based on Role
+  if (userData.role === 'landlord') {
+    return <LandlordApp user={user} />;
+  }
+
+  if (userData.role === 'tenant') {
+    return <TenantApp user={user} />;
+  }
+
+  // Fallback if role is unrecognized
+  return <RoleSelection user={user} />;
 }
 
 export default App;
