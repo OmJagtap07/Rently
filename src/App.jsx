@@ -8,6 +8,7 @@ import { Wallet } from 'lucide-react';
 import RoleSelection from './components/RoleSelection.jsx';
 import LandlordApp from './LandlordApp.jsx';
 import TenantApp from './TenantApp.jsx';
+import { PropertyProvider } from './context/PropertyContext.jsx';
 
 function App() {
   const [user, setUser] = useState(null);
@@ -112,7 +113,11 @@ function App() {
 
   // 4. Role Exists -> Route based on Role
   if (userData.role === 'landlord') {
-    return <LandlordApp user={user} />;
+    return (
+      <PropertyProvider user={user}>
+        <LandlordApp user={user} />
+      </PropertyProvider>
+    );
   }
 
   if (userData.role === 'tenant') {
