@@ -16,6 +16,8 @@ Managing multiple properties often involves scattered spreadsheets, disconnected
 
 ### Core features currently implemented
 *   **Google Authentication:** Secure login using Firebase Auth.
+*   **Role-Based Access:** Dedicated interfaces for Landlords and Tenants during onboarding.
+*   **Property Management:** Add and manage properties, and generate smart join codes for tenants.
 *   **Financial Dashboard:** Real-time overview of monthly balances, income, and expenses with interactive charts.
 *   **Transaction Logging:** Add, view, and delete income and expense records.
 *   **Tenant Directory:** Automatically aggregates tenant information based on transaction history.
@@ -23,7 +25,6 @@ Managing multiple properties often involves scattered spreadsheets, disconnected
 *   **Monthly Reports:** Aggregated historical data of income and expenses sorted by month.
 
 ### Future scope and planned enhancements
-*   Tenant portal (login for tenants to view rent dues).
 *   Automated rent due notifications.
 *   Payment history portal for tenants.
 *   PDF export for monthly reports.
@@ -97,19 +98,24 @@ src/
 │   └── Layout.jsx       # Main application layout (Sidebar + Content area)
 ├── config/              # Configuration files
 │   └── firebase.js      # Firebase initialization and SDK exports
-├── context/             # React Context providers (TO BE FILLED BY DEVELOPER)
-│   └── AuthContext.jsx
-├── hooks/               # Custom React hooks (TO BE FILLED BY DEVELOPER)
-│   └── useAuth.js
+├── context/             # React Context providers 
+│   ├── AuthContext.jsx
+│   └── PropertyContext.jsx
+├── hooks/               # Custom React hooks 
+│   ├── useAuth.js
+│   └── useProperties.js
 ├── lib/                 # Utility functions
 │   └── utils.js         # Contains cn() for Tailwind class merging
 ├── pages/               # Top-level route components
 │   ├── About.jsx        # App info
 │   ├── Dashboard.jsx    # Main dashboard (charts, transactions)
+│   ├── Properties.jsx   # Property management and join codes
 │   ├── Reports.jsx      # Monthly financial reports
 │   ├── Settings.jsx     # User settings
 │   └── Tenants.jsx      # Tenant directory and WhatsApp integration
-├── App.jsx              # Root component, Routing, Auth Guard
+├── App.jsx              # Root component, Routing logic based on Role
+├── LandlordApp.jsx      # App entry point for Landlords
+├── TenantApp.jsx        # App entry point for Tenants
 ├── main.jsx             # React DOM entry point
 └── index.css            # Global CSS and Tailwind directives
 ```
@@ -122,7 +128,7 @@ UI primitives are kept in `components/ui`, layout structures in `components`, an
 ## 5. Frontend Architecture
 
 ### Routing Strategy
-Uses `react-router-dom` (`BrowserRouter`). All authenticated routes are nested under the `<Layout>` component, which acts as a wrapper providing the Sidebar.
+Uses `react-router-dom` (`BrowserRouter`). The root `App.jsx` handles role-based routing by checking the user's role in Firestore (`users` collection) and conditionally rendering either `LandlordApp` or `TenantApp`. All authenticated landlord routes are nested under the `<Layout>` component, which acts as a wrapper providing the Sidebar.
 
 ### State Management
 *   **Local State:** `useState` is used for form inputs, modals, and localized data (e.g., `transactions` list in Dashboard).
@@ -189,6 +195,23 @@ Route protection is enforced at the root level in `App.jsx`. The entire `Browser
 **Firebase Firestore** (NoSQL Document Database).
 
 ### Collections and Models
+
+#### Collection: `users`
+Used to store user profile data and roles.
+*   `uid` (String): ID of the authenticated user.
+*   `email` (String): User's email address.
+*   `displayName` (String): User's full name.
+*   `role` (String): "landlord" | "tenant".
+*   `createdAt` (Timestamp).
+
+#### Collection: `properties`
+Used to store properties created by landlords.
+*   `id` (String): Document ID.
+*   `landlordId` (String): UID of the owner.
+*   `name` (String): Property name.
+*   `address` (String): Property address.
+*   `joinCode` (String): Unique 6-character code for tenants to join.
+*   `createdAt` (Timestamp).
 
 #### Collection: `transactions`
 Used to log all income (rent) and expenses.
@@ -374,7 +397,7 @@ Managed securely in Netlify's environment settings. `VITE_FIREBASE_*` variables 
 ## 19. Frequently Asked User Questions
 
 **Q: Can I manage multiple properties?**
-A: Currently, all transactions are pooled together under your account. Multi-property specific filtering is planned for the future roadmap.
+A: Yes. You can create multiple properties in the "Properties" tab, and each property will generate a unique join code that you can share with your tenants for that specific property.
 
 **Q: Is my financial data secure?**
 A: Yes. You authenticate securely via Google, and database rules ensure that only your authenticated account can access your data.
@@ -413,6 +436,5 @@ A: Firebase Firestore provides basic offline caching. You may view recently load
 
 *   **Refactoring:** Migrate local `alert()` based error handling to a global toast notification system.
 *   **Technical Improvements:** Implement server-side aggregations for the Reports tab using Firebase Cloud Functions to optimize read costs.
-*   **Features:** Multi-property tagging, allowing landlords to filter income and expenses by specific buildings/units.
 *   **Testing:** Introduce Vitest for unit testing data aggregation logic, and Cypress for E2E testing of the authentication and transaction creation flows.
 *   **Typescript:** Migrate the codebase from `.jsx` to `.tsx` for strict type safety on Firestore document schemas.

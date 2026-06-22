@@ -9,6 +9,8 @@
 ## ✨ Features
 
 - **🔐 Secure Authentication:** Seamless Google Sign-In powered by Firebase Authentication.
+- **🏡 Property Management:** Create and manage multiple properties, each with its own unique join code for easy tenant onboarding.
+- **🧑‍🤝‍🧑 Role-Based Access:** Dedicated interfaces for Landlords (management) and Tenants (viewing dues and submitting requests).
 - **📊 Interactive Dashboard:** Visual financial overview with dynamic charts (powered by Recharts).
 - **💸 Expense & Income Tracking:** Easily log, categorize, and delete transactions. Grouped by date for easy reading.
 - **👥 Tenant Management:** Keep track of tenants and associate incomes with specific tenants.
@@ -68,15 +70,20 @@ Follow these steps to run the project locally.
 ```text
 src/
 ├── components/       # Reusable UI components (Buttons, Cards, etc.)
+├── context/          # React Contexts (AuthContext, PropertyContext)
+├── hooks/            # Custom React hooks (useAuth, useProperties)
 ├── lib/              # Utility functions and helpers
-├── About.jsx         # About page
-├── App.jsx           # Main application entry & routing
-├── Dashboard.jsx     # Main financial dashboard and charts
-├── firebase.js       # Firebase initialization and configuration
-├── Layout.jsx        # App layout with Sidebar/Navbar navigation
-├── Reports.jsx       # Financial reporting view
-├── Settings.jsx      # User settings page
-└── Tenants.jsx       # Tenant management interface
+├── pages/            # Application pages
+│   ├── About.jsx
+│   ├── Dashboard.jsx
+│   ├── Properties.jsx# Property management interface
+│   ├── Reports.jsx
+│   ├── Settings.jsx
+│   └── Tenants.jsx
+├── App.jsx           # Main application entry & role-based routing
+├── LandlordApp.jsx   # Dedicated app view for Landlords
+├── TenantApp.jsx     # Dedicated app view for Tenants
+└── firebase.js       # Firebase initialization and configuration
 ```
 
 ## 📜 Scripts
