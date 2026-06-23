@@ -1,5 +1,9 @@
 # Rently 🏠
 
+[![CI](https://github.com/OmJagtap07/Rently/actions/workflows/ci.yml/badge.svg)](https://github.com/OmJagtap07/Rently/actions/workflows/ci.yml)
+[![Netlify Status](https://api.netlify.com/api/v1/badges/e85fde67-1755-46cb-834c-d90c017d7b1b/deploy-status)](https://app.netlify.com/sites/rentmanager0/deploys)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
 A property management dashboard for landlords to track **rental income, expenses, and tenant rent collection** — all in one place.
 
 > 🔜 **Coming soon:** Tenant portal with rent due notifications and payment history.
