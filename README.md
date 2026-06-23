@@ -11,12 +11,15 @@ A property management dashboard for landlords to track **rental income, expenses
 
 ## ✨ Features
 
-### Owner Dashboard (Available Now)
-- 📊 Income vs expense overview per property
-- 🏘️ Multi-property management from a single account
-- 💰 Rent collection tracking per tenant
-- 📈 Income and expense logging with history
-- 👥 Tenant management per property
+- **🔐 Secure Authentication:** Seamless Google Sign-In powered by Firebase Authentication.
+- **🏡 Property Management:** Create and manage multiple properties, each with its own unique join code for easy tenant onboarding.
+- **🧑‍🤝‍🧑 Role-Based Access:** Dedicated interfaces for Landlords (management) and Tenants (viewing dues and submitting requests).
+- **📊 Interactive Dashboard:** Visual financial overview with dynamic charts (powered by Recharts).
+- **💸 Expense & Income Tracking:** Easily log, categorize, and delete transactions. Grouped by date for easy reading.
+- **👥 Tenant Management:** Keep track of tenants and associate incomes with specific tenants.
+- **📈 Financial Reports:** Detailed insights into your monthly balances, total income, and total expenses.
+- **📱 Fully Responsive:** Carefully crafted mobile-friendly design that works perfectly on all devices.
+- **🌙 Modern Dark UI:** Sleek, dark theme built with Tailwind CSS.
 
 ### Tenant Portal (Coming Soon)
 - 🔔 Rent due notifications
@@ -46,30 +49,21 @@ A property management dashboard for landlords to track **rental income, expenses
 ## 📁 Project Structure
 ```
 src/
-├── components/
-│   ├── ui/
-│   │   ├── Button.jsx         ← each component = own file
-│   │   ├── Card.jsx
-│   │   ├── Modal.jsx
-│   │   └── Input.jsx
-│   └── Layout.jsx             ← shared layout goes here
-├── pages/
+├── components/       # Reusable UI components (Buttons, Cards, etc.)
+├── context/          # React Contexts (AuthContext, PropertyContext)
+├── hooks/            # Custom React hooks (useAuth, useProperties)
+├── lib/              # Utility functions and helpers
+├── pages/            # Application pages
+│   ├── About.jsx
 │   ├── Dashboard.jsx
+│   ├── Properties.jsx# Property management interface
 │   ├── Reports.jsx
 │   ├── Settings.jsx
-│   ├── Tenants.jsx
-│   └── About.jsx
-├── config/
-│   └── firebase.js
-├── hooks/                     ← create this, even if empty now
-│   └── useAuth.js
-├── context/                   ← create this, even if empty now
-│   └── AuthContext.jsx
-├── lib/                       ← keep as-is (likely shadcn utils)
-│   └── utils.js
-├── App.jsx
-├── main.jsx
-└── index.css
+│   └── Tenants.jsx
+├── App.jsx           # Main application entry & role-based routing
+├── LandlordApp.jsx   # Dedicated app view for Landlords
+├── TenantApp.jsx     # Dedicated app view for Tenants
+└── firebase.js       # Firebase initialization and configuration
 ```
 
 ## ⚡ Getting Started

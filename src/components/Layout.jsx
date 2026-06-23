@@ -1,6 +1,6 @@
 import React from 'react';
 import { Outlet, NavLink, useNavigate } from 'react-router-dom';
-import { LayoutDashboard, FileText, Users, Settings, Info, LogOut, Wallet } from 'lucide-react';
+import { LayoutDashboard, Building2, FileText, Users, Settings, Info, LogOut, Wallet } from 'lucide-react';
 import { auth } from '../config/firebase';
 import { signOut } from 'firebase/auth';
 
@@ -14,6 +14,7 @@ const Layout = ({ user }) => {
 
     const navItems = [
         { icon: LayoutDashboard, label: 'Dashboard', path: '/dashboard' },
+        { icon: Building2, label: 'Properties', path: '/properties' },
         { icon: FileText, label: 'Reports', path: '/reports' },
         { icon: Users, label: 'Tenants', path: '/tenants' },
         { icon: Settings, label: 'Settings', path: '/settings' },
