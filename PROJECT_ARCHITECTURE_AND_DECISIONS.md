@@ -360,7 +360,7 @@ Managed securely in Netlify's environment settings. `VITE_FIREBASE_*` variables 
 
 ### Decision: Merging Tenant Logic into Transactions
 *   **Why:** Tenants don't have mandatory independent profiles to start. They are dynamically generated from transaction names.
-*   **Drawbacks:** If a landlord typoes a tenant's name (e.g., "John Doe" vs "John doe"), it creates two separate tenant profiles.
+*   **Drawbacks:** If a landlord typos a tenant's name (e.g., "John Doe" vs "John doe"), it creates two separate tenant profiles.
 *   **When to change:** Implement a strict relational model where landlords create a Tenant entity first, and transactions reference a strict `tenantId`.
 
 ---

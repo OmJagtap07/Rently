@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useOutletContext } from 'react-router-dom';
-import { Building2, Plus, Edit2, Archive, Copy, Share2, MapPin, Users, Home, CheckCircle2, MoreVertical } from 'lucide-react';
+import { Building2, Plus, Edit2, Archive, Copy, Share2, MapPin, Users, Home, CheckCircle2 } from 'lucide-react';
 import { useProperties } from '../hooks/useProperties';
 
 const PROPERTY_TYPES = ['Apartment', 'Building', 'Villa', 'Commercial', 'PG'];
@@ -45,7 +45,7 @@ const Properties = () => {
       }
       handleCloseModal();
     } catch (error) {
-      // Error is handled in hook, but we catch it here to stop modal close if needed
+      console.error("Failed to save property:", error);
     }
   };
 
@@ -76,7 +76,6 @@ const Properties = () => {
       }
     } else {
       handleCopyCode(property.joinCode);
-      alert("Join code copied to clipboard!");
     }
   };
 

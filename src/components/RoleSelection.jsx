@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Building2, Home, CheckCircle2, ArrowRight } from 'lucide-react';
 import { doc, updateDoc, serverTimestamp } from 'firebase/firestore';
-import { db } from '../config/firebase';
+import { db, auth } from '../config/firebase';
 
 const RoleSelection = ({ user }) => {
   const [loading, setLoading] = useState(false);
@@ -26,7 +26,14 @@ const RoleSelection = ({ user }) => {
   };
 
   return (
-    <div className="min-h-screen bg-slate-950 flex flex-col items-center justify-center p-4">
+    <div className="min-h-screen bg-slate-950 flex flex-col items-center justify-center p-4 relative">
+      <button 
+        onClick={() => auth.signOut()} 
+        className="absolute top-4 right-4 text-slate-400 hover:text-white text-sm font-medium transition-colors"
+      >
+        Sign Out
+      </button>
+      
       <div className="max-w-4xl w-full text-center mb-12">
         <h1 className="text-4xl md:text-5xl font-extrabold text-white mb-4 tracking-tight">
           Welcome to RentManager!

@@ -49,7 +49,7 @@ export const getProperties = async (ownerUid) => {
   const q = query(
     collection(db, COLLECTION_NAME), 
     where("ownerUid", "==", ownerUid),
-    where("status", "!=", "archived")
+    where("status", "==", "active")
   );
   
   const querySnapshot = await getDocs(q);

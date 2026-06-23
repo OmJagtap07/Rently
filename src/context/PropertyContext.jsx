@@ -50,7 +50,7 @@ export const PropertyProvider = ({ user, children }) => {
 
   useEffect(() => {
     refreshProperties();
-  }, [user]);
+  }, [user?.uid]);
 
   const handleSetSelectedProperty = (id) => {
     setSelectedPropertyId(id);
